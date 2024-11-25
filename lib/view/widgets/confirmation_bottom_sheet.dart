@@ -26,7 +26,7 @@ class ConfirmationBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              AnimatedClock(),
+              const AnimatedClock(),
               Text(
                 '¿Programar alarma a las ${time?.format(context) ?? 'No time set'}?',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -58,6 +58,7 @@ class ConfirmationBottomSheet extends StatelessWidget {
                       Navigator.pop(context, 'confirmar');
                     },
                     child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         'Aceptar',
                         style: Theme.of(context)
@@ -68,7 +69,6 @@ class ConfirmationBottomSheet extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
                     ),
                   )
                 ],

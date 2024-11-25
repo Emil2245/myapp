@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/view/widgets/set_sleep_time_button.dart';
+import 'package:myapp/view/widgets/bottom_sheet.dart';
+
 
 import '../app_icons.dart';
 
@@ -13,7 +15,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  String _storedValue = "No value saved";
+  final String _storedValue = "No value saved";
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class _SettingsViewState extends State<SettingsView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(AppIcons.back),
+          icon: const Icon(AppIcons.back),
         ),
         backgroundColor: Theme.of(context).primaryColor,
         title: Text(
@@ -35,7 +37,10 @@ class _SettingsViewState extends State<SettingsView> {
         centerTitle: true,
       ),
       body: Center(
-        child: SetSleepTimeButton(onPressed: (){})
+        //child: SetSleepTimeButton(onPressed: (){})
+                child: DraggableScrollableSheetExample
+                ()
+
       ),
     );
   }

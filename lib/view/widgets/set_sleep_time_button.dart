@@ -59,12 +59,12 @@ class SetSleepTimeButton extends StatelessWidget {
                 {
                   showModalBottomSheet(
                     context: context,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(25)),
                     ),
                     builder: (BuildContext context) {
-                      return SetSleepTimeBottomSheet(
+                      return const SetSleepTimeBottomSheet(
                       );
                     },
                   );

@@ -107,7 +107,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                 ElevatedButton(
                                   onPressed: () {},
                                   child: Text(
-                                    '${widget.time?.format(context) ?? "--:--"}',
+                                    widget.time?.format(context) ?? "--:--",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge

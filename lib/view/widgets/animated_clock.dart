@@ -17,7 +17,7 @@ class _AnimatedClockState extends State<AnimatedClock>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(seconds: 12),
+      duration: const Duration(seconds: 12),
     )..repeat();
   }
 
@@ -26,7 +26,7 @@ class _AnimatedClockState extends State<AnimatedClock>
     return Center(
       child: CustomPaint(
         painter: ClockPainter(controller: _controller, context: context),
-        child: SizedBox(width: 45, height: 45),
+        child: const SizedBox(width: 45, height: 45),
       ),
     );
   }

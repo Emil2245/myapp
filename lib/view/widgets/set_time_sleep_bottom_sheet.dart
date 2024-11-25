@@ -14,7 +14,7 @@ class _SetSleepTimeBottomSheetState extends State<SetSleepTimeBottomSheet>
     with WidgetsBindingObserver {
   double _initialChildSize = 0.5;
   double _minChildSize = 0.3;
-  double _maxChildSize = 1.0;
+  final double _maxChildSize = 1.0;
 
   @override
   void initState() {
@@ -55,11 +55,10 @@ class _SetSleepTimeBottomSheetState extends State<SetSleepTimeBottomSheet>
       minChildSize: _minChildSize,
       maxChildSize: _maxChildSize,
       builder: (context, scrollController) {
+        
         return Container(
           color: Theme.of(context).colorScheme.surfaceTint,
-          child: SingleChildScrollView(
-            controller: scrollController,
-            child: Column(
+          child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -135,7 +134,7 @@ class _SetSleepTimeBottomSheetState extends State<SetSleepTimeBottomSheet>
                 ),
               ],
             ),
-          ),
+  
         );
       },
     );
