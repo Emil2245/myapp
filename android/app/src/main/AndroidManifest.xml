@@ -42,4 +42,5 @@
             <data android:mimeType="text/plain"/>
         </intent>
     </queries>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 </manifest>

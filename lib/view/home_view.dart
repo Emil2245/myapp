@@ -55,23 +55,20 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 // Additional Content
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "¿Cuál horario elegirás?",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                  fontWeight: FontWeight.w300),
-                        ),
-                      ],
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "¿Cuál horario elegirás?",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.onPrimary,
+                                fontWeight: FontWeight.w300),
+                      ),
+                    ],
                   ),
                 ),
               ],

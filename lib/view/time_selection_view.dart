@@ -62,8 +62,6 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                           .onPrimary,
                                       fontWeight: FontWeight.normal),
                             ),
-                            const SizedBox(width: 48),
-                            // Placeholder for spacing
                           ]),
                     ),
                     // Additional Content
@@ -160,89 +158,87 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                 ),
               )),
         ),
-        body: Container(
-          color: Theme.of(context).colorScheme.primary,
-          child: SingleChildScrollView(
-              child: Center(
-            child: Column(
-              children: widget.mode == 4
-                  ? [
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 6, widget.preTime),
-                          num: 6),
-                    ]
-                      .map(
-                        (button) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 12.0),
-                          child: button,
-                        ),
-                      )
-                      .toList()
-                  : [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          KindSleep(textHeadline: "Para un descanso eficiente"),
-                        ],
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        body: SingleChildScrollView(
+            child: Center(
+          child: Column(
+            children: widget.mode == 4
+                ? [
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 6, widget.preTime),
+                        num: 6),
+                  ]
+                    .map(
+                      (button) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        child: button,
                       ),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 6, widget.preTime),
-                          num: 6),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 5, widget.preTime),
-                          num: 5),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          KindSleep(textHeadline: "Para un descanso regular"),
-                        ],
+                    )
+                    .toList()
+                : [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        KindSleep(textHeadline: "Para un descanso eficiente"),
+                      ],
+                    ),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 6, widget.preTime),
+                        num: 6),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 5, widget.preTime),
+                        num: 5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        KindSleep(textHeadline: "Para un descanso regular"),
+                      ],
+                    ),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 4, widget.preTime),
+                        num: 4),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        KindSleep(
+                            textHeadline: "Para un descanso deficiente"),
+                      ],
+                    ),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 3, widget.preTime),
+                        num: 3),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 2, widget.preTime),
+                        num: 2),
+                    AlarmButton(
+                        onPressed: () {},
+                        time: addTimes(
+                            widget.time as TimeOfDay, 1, widget.preTime),
+                        num: 1),
+                  ]
+                    .map(
+                      (button) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 12.0),
+                        child: button,
                       ),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 4, widget.preTime),
-                          num: 4),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          KindSleep(
-                              textHeadline: "Para un descanso deficiente"),
-                        ],
-                      ),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 3, widget.preTime),
-                          num: 3),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 2, widget.preTime),
-                          num: 2),
-                      AlarmButton(
-                          onPressed: () {},
-                          time: addTimes(
-                              widget.time as TimeOfDay, 1, widget.preTime),
-                          num: 1),
-                    ]
-                      .map(
-                        (button) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 12.0),
-                          child: button,
-                        ),
-                      )
-                      .toList(),
-            ),
-          )),
-        ));
+                    )
+                    .toList(),
+          ),
+        )));
   }
 
   TimeOfDay addTimes(TimeOfDay time, int num, int pretime) {

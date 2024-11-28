@@ -1,3 +1,4 @@
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/view/components/animated_clock.dart';
 
@@ -54,7 +55,16 @@ class ConfirmationBottomSheet extends StatelessWidget {
                             .colorScheme
                             .onPrimaryFixedVariant),
                     onPressed: () {
-                      Navigator.pop(context, 'confirmar');
+                      if (time != null) {
+                        _setAlarm(context, time!);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "Selecciona un tiempo para configurar la alarma."),
+                          ),
+                        );
+                      }
                     },
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
@@ -77,5 +87,25 @@ class ConfirmationBottomSheet extends StatelessWidget {
         );
       },
     );
+  }
+
+  void _setAlarm(BuildContext context, TimeOfDay time) {
+    final int hour = time.hour;
+    final int minute = time.minute;
+
+    final intent = AndroidIntent(
+      action: 'android.intent.action.SET_ALARM',
+      arguments: <String, dynamic>{
+        'android.intent.extra.alarm.HOUR': hour,
+        'android.intent.extra.alarm.MINUTES': minute,
+        'android.intent.extra.alarm.SKIP_UI': false,
+      },
+    );
+
+    intent.launch().catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al configurar la alarma: $e")),
+      );
+    });
   }
 }
