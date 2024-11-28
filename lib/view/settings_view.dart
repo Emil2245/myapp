@@ -14,7 +14,28 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  late String _storedValue = "No value saved";
+  int? _sleepTime;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSleepTime();
+  }
+
+  Future<void> _loadSleepTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _sleepTime = prefs.getInt('timeToSleep') ?? 30; // Default is 30
+    });
+  }
+
+  Future<void> _updateSleepTime(int newTime) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('timeToSleep', newTime);
+    setState(() {
+      _sleepTime = newTime;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +57,40 @@ class _SettingsViewState extends State<SettingsView> {
           centerTitle: true,
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ...[
-              SetSleepTimeButton(
-                onPressed: () {},
-              ),
-            ].map(
-              (button) => Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                child: button,
-              ),
-            )
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Ajustes:',
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...[
+                  SetSleepTimeButton(
+                    onValueChanged: (int newValue) {
+                      _updateSleepTime(newValue);
+                    },
+                    currentSleepTime: _sleepTime ?? 30,
+                  ),
+                ].map(
+                  (button) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    child: button,
+                  ),
+                )
+              ],
+            ),
           ],
         ));
   }
-
 }

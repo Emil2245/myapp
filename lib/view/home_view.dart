@@ -35,8 +35,8 @@ class _HomeViewState extends State<HomeView> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => const SettingsView(
-                    title: '',
+                  builder: (_) => SettingsView(
+                    title: widget.title,
                   ),
                 ),
               );
@@ -84,15 +84,13 @@ class _HomeViewState extends State<HomeView> {
                   topText: 'Toma una siesta en este momento',
                   bottomText: 'Siestita <3',
                 ),
-              ]
-                  .map(
-                    (button) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 12.0),
-                      child: button,
-                    ),
-                  )
-                  ,
+              ].map(
+                (button) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 12.0),
+                  child: button,
+                ),
+              ),
             ],
           ),
         ),

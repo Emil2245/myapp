@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/widgets/animated_clock.dart';
+import 'package:myapp/view/components/animated_clock.dart';
 
 class ConfirmationBottomSheet extends StatelessWidget {
   final TimeOfDay? time;

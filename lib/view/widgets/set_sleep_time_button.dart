@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/widgets/bottom_sheet.dart';
+import 'package:myapp/view/widgets/settings_bottom_sheet.dart';
 
 class SetSleepTimeButton extends StatelessWidget {
-  final VoidCallback onPressed;
+  final ValueChanged<int> onValueChanged;
+  final int currentSleepTime;
 
   const SetSleepTimeButton({
     super.key,
-    required this.onPressed,
+    required this.onValueChanged,
+    required this.currentSleepTime,
   });
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,15 +60,18 @@ class SetSleepTimeButton extends StatelessWidget {
                 ],
               ),
               child: IconButton(
-                  onPressed: () {
-                    showModalBottomSheet(
+                  onPressed: () async {
+                    final newValue = await showModalBottomSheet<int>(
                       isScrollControlled: true,
                       context: context,
                       backgroundColor: Theme.of(context).colorScheme.primary,
                       builder: (BuildContext context) {
-                        return SettingsBottomSheet();
+                        return SettingsBottomSheet(initialValue: currentSleepTime);
                       },
                     );
+                    if (newValue != null) {
+                      onValueChanged(newValue);
+                    }
                   },
                   icon: Icon(
                     Icons.bedtime,
