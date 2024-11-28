@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:myapp/app_icons.dart';
 import 'package:myapp/view/widgets/confirmation_bottom_sheet.dart';
+import 'package:myapp/view/widgets/set_alarm_button.dart';
 
 class AlarmButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -31,64 +32,37 @@ class AlarmButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Text(
-            "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  fontWeight: FontWeight.w300,
-                ),
-          ),
-          Text(
-            time?.format(context) ?? "No time set",
-            style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Theme.of(context)
-                      .colorScheme
-                      .tertiaryContainer
-                      .withOpacity(0.2),
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return ConfirmationBottomSheet(
-                      time: time,
-                    );
-                  },
-                );
-              },
-              icon: ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.primaryContainer,
-                  BlendMode.srcIn,
-                ),
-                child: SvgPicture.asset(
-                  AppIcons.alarm,
-                  height: 40,
-                  width: 40,
-                ),
+          // Primer elemento: Número de ciclos
+            Expanded(
+              child: Text(
+                "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      fontWeight: FontWeight.w300,
+                    ),
               ),
             ),
-          ),
+
+            // Segundo elemento: Texto centrado (Hora)
+            Expanded(
+              child: Text(
+                time?.format(context) ?? "No time set",
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+
+            // Tercer elemento: Botón de alarma ajustado
+            Expanded(
+              child: SetAlarmButton(onPressed: onPressed, time: time),
+            ),
+          
         ],
       ),
     );
