@@ -18,7 +18,7 @@ class AlarmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
         borderRadius: const BorderRadius.all(Radius.circular(24)),
         boxShadow: [
           BoxShadow(

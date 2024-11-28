@@ -56,41 +56,44 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           centerTitle: true,
         ),
-        body: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    'Ajustes:',
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
-                        fontWeight: FontWeight.bold),
+        body: Container(
+          color:Theme.of(context).colorScheme.primary,
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      'Ajustes:',
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold),
+                    ),
                   ),
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...[
-                  SetSleepTimeButton(
-                    onValueChanged: (int newValue) {
-                      _updateSleepTime(newValue);
-                    },
-                    currentSleepTime: _sleepTime ?? 30,
-                  ),
-                ].map(
-                  (button) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 12.0),
-                    child: button,
-                  ),
-                )
-              ],
-            ),
-          ],
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ...[
+                    SetSleepTimeButton(
+                      onValueChanged: (int newValue) {
+                        _updateSleepTime(newValue);
+                      },
+                      currentSleepTime: _sleepTime ?? 30,
+                    ),
+                  ].map(
+                    (button) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 12.0),
+                      child: button,
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
         ));
   }
 }

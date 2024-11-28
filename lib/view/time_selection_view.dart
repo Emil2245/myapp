@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:myapp/view/components/kind_sleep_text.dart';
 import 'package:myapp/view/widgets/alarm_button.dart';
 
@@ -7,11 +6,16 @@ import '../app_icons.dart';
 
 class TimeSelectionView extends StatefulWidget {
   const TimeSelectionView(
-      {super.key, required this.title, required this.time, required this.mode});
+      {super.key,
+      required this.title,
+      required this.time,
+      required this.mode,
+      required this.preTime});
 
   final String title;
   final int mode;
   final TimeOfDay? time;
+  final int preTime;
 
   @override
   State<TimeSelectionView> createState() => _TimeSelectionViewState();
@@ -89,23 +93,32 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: ColorFiltered(
-                                    colorFilter: ColorFilter.mode(
-                                      Theme.of(context)
-                                          .colorScheme
-                                          .primaryContainer,
-                                      BlendMode.srcIn,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      AppIcons.alarm,
-                                      height: 40,
-                                      width: 40,
-                                    ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryFixedVariant,
+                                    borderRadius: BorderRadius.circular(40),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer
+                                            .withOpacity(0.2),
+                                      ),
+                                    ],
                                   ),
+                                  child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.autorenew,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
+                                        size: 30,
+                                      )),
                                 ),
-                                ElevatedButton(
+                                TextButton(
                                   onPressed: () {},
                                   child: Text(
                                     widget.time?.format(context) ?? "--:--",
@@ -115,7 +128,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                         ?.copyWith(
                                             color: Theme.of(context)
                                                 .colorScheme
-                                                .primary,
+                                                .onPrimary,
                                             fontWeight: FontWeight.bold),
                                   ),
                                 ),
@@ -147,73 +160,106 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                 ),
               )),
         ),
-        body: SingleChildScrollView(
-            child: Center(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  KindSleep(textHeadline: "Para un descanso eficiente"),
-                ],
-              ),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 6),
-                  num: 6),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 5),
-                  num: 5),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  KindSleep(textHeadline: "Para un descanso regular"),
-                ],
-              ),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 4),
-                  num: 4),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  KindSleep(textHeadline: "Para un descanso deficiente"),
-                ],
-              ),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 3),
-                  num: 3),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 2),
-                  num: 2),
-              AlarmButton(
-                  onPressed: () {},
-                  time: addTimes(widget.time as TimeOfDay, 1),
-                  num: 1),
-            ]
-                .map(
-                  (button) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 12.0),
-                    child: button,
-                  ),
-                )
-                .toList(),
-          ),
-        )));
+        body: Container(
+          color: Theme.of(context).colorScheme.primary,
+          child: SingleChildScrollView(
+              child: Center(
+            child: Column(
+              children: widget.mode == 4
+                  ? [
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 6, widget.preTime),
+                          num: 6),
+                    ]
+                      .map(
+                        (button) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12.0),
+                          child: button,
+                        ),
+                      )
+                      .toList()
+                  : [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          KindSleep(textHeadline: "Para un descanso eficiente"),
+                        ],
+                      ),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 6, widget.preTime),
+                          num: 6),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 5, widget.preTime),
+                          num: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          KindSleep(textHeadline: "Para un descanso regular"),
+                        ],
+                      ),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 4, widget.preTime),
+                          num: 4),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          KindSleep(
+                              textHeadline: "Para un descanso deficiente"),
+                        ],
+                      ),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 3, widget.preTime),
+                          num: 3),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 2, widget.preTime),
+                          num: 2),
+                      AlarmButton(
+                          onPressed: () {},
+                          time: addTimes(
+                              widget.time as TimeOfDay, 1, widget.preTime),
+                          num: 1),
+                    ]
+                      .map(
+                        (button) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 12.0),
+                          child: button,
+                        ),
+                      )
+                      .toList(),
+            ),
+          )),
+        ));
   }
 
-  TimeOfDay addTimes(TimeOfDay time, int num) {
+  TimeOfDay addTimes(TimeOfDay time, int num, int pretime) {
     final horita = DateTime.now();
     final nuevaHora = horita.copyWith(hour: time.hour, minute: time.minute);
 
-    Duration timeAdded =
-        Duration(hours: (num * 1.5).toInt(), minutes: !(num % 2 == 0) ? 30 : 0);
+    Duration preTimeToAdd = Duration(minutes: pretime);
+    Duration timeAdded = widget.mode == 4
+        ? Duration(minutes: 26)
+        : Duration(
+            hours: (num * 1.5).floor().toInt(),
+            minutes: !(num % 2 == 0) ? 30 : 0);
 
-    final resultado = nuevaHora.add(timeAdded);
+    final resultado = {
+          1: nuevaHora.subtract(timeAdded).subtract(preTimeToAdd)
+        }[widget.mode] ??
+        nuevaHora.add(timeAdded).add(preTimeToAdd);
 
     return TimeOfDay(hour: resultado.hour, minute: resultado.minute);
   }

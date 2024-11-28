@@ -10,7 +10,7 @@ class KindSleep extends StatelessWidget {
     return Text(
       textHeadline,
       style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onPrimary,
           fontWeight: FontWeight.normal),
       textAlign: TextAlign.left,
     );

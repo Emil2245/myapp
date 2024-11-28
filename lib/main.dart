@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onPrimary, size: 34))),
       darkTheme: materialTheme.dark(),
       themeMode: ThemeMode.system,
-      home: const HomeView(title: 'Sleepy Time'),
+      home: const HomeView(title: 'Sleeepy Time'),
     );
   }
 }

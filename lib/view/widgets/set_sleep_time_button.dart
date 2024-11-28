@@ -16,13 +16,13 @@ class SetSleepTimeButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20.0),
       child: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
           borderRadius: const BorderRadius.all(Radius.circular(24)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 6,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
