@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:myapp/view/components/kind_sleep_text.dart';
 import 'package:myapp/view/widgets/alarm_button.dart';
 
 import '../app_icons.dart';
@@ -153,13 +154,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Para un descanso eficiente",
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.left,
-                  ),
+                  KindSleep(textHeadline: "Para un descanso eficiente"),
                 ],
               ),
               AlarmButton(
@@ -173,13 +168,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Para un descanso regular",
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.left,
-                  ),
+                  KindSleep(textHeadline: "Para un descanso regular"),
                 ],
               ),
               AlarmButton(
@@ -189,13 +178,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    "Para un descanso deficiente",
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.normal),
-                    textAlign: TextAlign.left,
-                  ),
+                  KindSleep(textHeadline: "Para un descanso deficiente"),
                 ],
               ),
               AlarmButton(
@@ -234,5 +217,4 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
 
     return TimeOfDay(hour: resultado.hour, minute: resultado.minute);
   }
-
 }

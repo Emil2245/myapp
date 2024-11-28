@@ -3,7 +3,7 @@ import 'package:myapp/theme.dart';
 import 'view/home_view.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

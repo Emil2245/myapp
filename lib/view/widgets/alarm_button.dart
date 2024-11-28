@@ -69,10 +69,6 @@ class AlarmButton extends StatelessWidget {
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(25)),
-                  ),
                   builder: (BuildContext context) {
                     return ConfirmationBottomSheet(
                       time: time,

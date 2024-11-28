@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:myapp/view/widgets/animated_clock.dart';
 
 class ConfirmationBottomSheet extends StatelessWidget {
@@ -26,7 +25,7 @@ class ConfirmationBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              const AnimatedClock(),
+              AnimatedClock(),
               Text(
                 '¿Programar alarma a las ${time?.format(context) ?? 'No time set'}?',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -58,7 +57,7 @@ class ConfirmationBottomSheet extends StatelessWidget {
                       Navigator.pop(context, 'confirmar');
                     },
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
                         'Aceptar',
                         style: Theme.of(context)
