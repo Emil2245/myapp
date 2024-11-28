@@ -140,9 +140,9 @@ class _TimeInputState extends State<TimeInput> {
                   ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * (2 / 3),
-                    child: OutlinedButton(
+                    child: TextButton(
                       onPressed: () {
-                        Navigator.pop(context, 'Cancelar');
+                        Navigator.pop(context);
                       },
                       child: Text(
                         'Cancelar',
