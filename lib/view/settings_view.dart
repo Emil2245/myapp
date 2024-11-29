@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/view/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_icons.dart';
+import 'loading_screen.dart';
 import 'widgets/set_sleep_time_button.dart';
 
 class SettingsView extends StatefulWidget {
@@ -42,8 +44,14 @@ class _SettingsViewState extends State<SettingsView> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) =>
+                      LoadingScreen(nextScreen: HomeView(title: widget.title)),
+                ),
+              );
             },
             icon: const Icon(AppIcons.back),
           ),
@@ -57,7 +65,7 @@ class _SettingsViewState extends State<SettingsView> {
           centerTitle: true,
         ),
         body: Container(
-          color:Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.primary,
           child: Column(
             children: [
               Row(
@@ -66,9 +74,12 @@ class _SettingsViewState extends State<SettingsView> {
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
                       'Ajustes:',
-                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          fontWeight: FontWeight.bold),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.bold),
                     ),
                   ),
                 ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/view/components/kind_sleep_text.dart';
+import 'package:myapp/view/settings_view.dart';
 import 'package:myapp/view/widgets/alarm_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_icons.dart';
 
@@ -23,53 +25,69 @@ class TimeSelectionView extends StatefulWidget {
 
 class _TimeSelectionViewState extends State<TimeSelectionView> {
   @override
+  void initState() {
+    super.initState();
+    _loadSleepTime();
+  }
+
+  late int _sleepTime;
+  @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(screenHeight / 3),
+          preferredSize: Size.fromHeight(screenHeight * 0.27),
           child: AppBar(
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => SettingsView(
+                          title: widget.title,
+                        ),
+                      ),
+                    ).then((_) {
+                      _loadSleepTime();
+                    });
+                  },
+                  icon: Icon(
+                    Icons.settings,
+                    size: 25,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
+              ],
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  AppIcons.back,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  size: 34,
+                ),
+              ),
+              title: Text(
+                widget.title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontWeight: FontWeight.normal),
+              ),
+              centerTitle: true,
               automaticallyImplyLeading: false,
               backgroundColor: Theme.of(context).primaryColor,
               flexibleSpace: SafeArea(
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      height: kToolbarHeight,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: Icon(
-                                AppIcons.back,
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                size: 34,
-                              ),
-                            ),
-                            Text(
-                              widget.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .onPrimary,
-                                      fontWeight: FontWeight.normal),
-                            ),
-                          ]),
-                    ),
                     // Additional Content
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(20.0),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
                               {
@@ -209,8 +227,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleep(
-                            textHeadline: "Para un descanso deficiente"),
+                        KindSleep(textHeadline: "Para un descanso deficiente"),
                       ],
                     ),
                     AlarmButton(
@@ -239,6 +256,13 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     .toList(),
           ),
         )));
+  }
+
+  Future<void> _loadSleepTime() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _sleepTime = prefs.getInt('timeToSleep') ?? 30;
+    });
   }
 
   TimeOfDay addTimes(TimeOfDay time, int num, int pretime) {

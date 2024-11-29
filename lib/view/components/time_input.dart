@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import '../../controller/shared_state.dart';
 
 class TimeInput extends StatefulWidget {
   final ValueNotifier<int?> valueNotifier;
@@ -33,6 +36,7 @@ class _TimeInputState extends State<TimeInput> {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<SharedState>(context);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -43,7 +47,7 @@ class _TimeInputState extends State<TimeInput> {
             FilteringTextInputFormatter.digitsOnly,
           ],
           decoration: InputDecoration(
-            labelText: 'Tiempo',
+            labelText: 'Tiempo: ${appState.sleepTime}',
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(16)),
             ),
@@ -90,6 +94,7 @@ class _TimeInputState extends State<TimeInput> {
                       onPressed: () {
                         final time = widget.valueNotifier.value;
                         if (time != null && time >= 1 && time <= 120) {
+                          appState.updateSleepTime(time);
                           Navigator.pop(context,
                               time); // Cierra el modal y devuelve el valor válido.
                         } else {

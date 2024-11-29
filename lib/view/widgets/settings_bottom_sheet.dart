@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/controller/shared_state.dart';
 import 'package:myapp/view/components/time_input.dart';
+import 'package:provider/provider.dart';
 
 class SettingsBottomSheet extends StatelessWidget {
   final int initialValue;
@@ -8,6 +10,7 @@ class SettingsBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<SharedState>(context);
     final ValueNotifier<int?> valueNotifier = ValueNotifier<int?>(initialValue);
 
     return Padding(

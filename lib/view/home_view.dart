@@ -5,6 +5,8 @@ import 'package:myapp/view/time_selection_view.dart';
 import 'package:myapp/view/widgets/custom_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'loading_screen.dart';
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.title});
 
@@ -76,13 +78,13 @@ class _HomeViewState extends State<HomeView> {
           ),
           actions: [
             IconButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                await Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => SettingsView(
+                    builder: (_) => LoadingScreen(nextScreen: SettingsView(
                       title: widget.title,
-                    ),
+                    ))
                   ),
                 ).then((_) {
                   _loadSleepTime(); // Vuelve a cargar la variable al regresar
