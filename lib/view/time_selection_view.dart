@@ -3,8 +3,8 @@ import 'package:myapp/view/components/kind_sleep_text.dart';
 import 'package:myapp/view/widgets/alarm_button.dart';
 import 'package:provider/provider.dart';
 
-import '../app_icons.dart';
-import '../controller/shared_state.dart';
+import 'package:myapp/app_icons.dart';
+import 'package:myapp/controller/shared_state.dart';
 import 'components/settings_button.dart';
 
 class TimeSelectionView extends StatefulWidget {

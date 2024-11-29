@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/view/settings_view.dart';
 
-import '../settings_view.dart';
 
 class SettingsButton extends StatefulWidget {
   final String title;

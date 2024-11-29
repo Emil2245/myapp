@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../app_icons.dart';
-import 'loading_screen.dart';
 import 'widgets/set_sleep_time_button.dart';
 
 class SettingsView extends StatefulWidget {
@@ -27,7 +25,7 @@ class _SettingsViewState extends State<SettingsView> {
   Future<void> _loadSleepTime() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _sleepTime = prefs.getInt('timeToSleep') ?? 30; // Default is 30
+      _sleepTime = prefs.getInt('timeToSleep') ?? 30; 
     });
   }
 

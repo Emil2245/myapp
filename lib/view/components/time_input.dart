@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:myapp/controller/shared_state.dart';
 import 'package:provider/provider.dart';
-
-import '../../controller/shared_state.dart';
 
 class TimeInput extends StatefulWidget {
   const TimeInput({
@@ -17,7 +16,6 @@ class _TimeInputState extends State<TimeInput> {
   late TextEditingController _controller;
   late ValueNotifier<int?> valueNotifier;
 
-  //todo: selecting the check button on keyboard does not change the value
   @override
   void initState() {
     super.initState();
@@ -78,6 +76,30 @@ class _TimeInputState extends State<TimeInput> {
               valueNotifier.value = number;
             }
           },
+          onEditingComplete: () {
+            // Actualizar la variable global al terminar de editar
+            final int? time = int.tryParse(_controller.text);
+            if (time != null && time >= 1 && time <= 120) {
+              final appState =
+                  Provider.of<SharedState>(context, listen: false);
+              appState.updateSleepTime(time);
+            } else {
+              // Manejo de error si el número no es válido
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(
+                    'Por favor, ingresa un número válido entre 1 y 120.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+            FocusScope.of(context).unfocus(); // Cerrar teclado
+          },
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
         Padding(
@@ -97,22 +119,15 @@ class _TimeInputState extends State<TimeInput> {
                             Theme.of(context).colorScheme.onPrimaryFixedVariant,
                       ),
                       onPressed: () {
-                        // Intenta convertir el texto del controlador en un entero
                         final int? time = int.tryParse(_controller.text);
 
                         if (time != null && time >= 1 && time <= 120) {
-                          // Actualiza el estado global con el tiempo ingresado
                           final appState =
                               Provider.of<SharedState>(context, listen: false);
                           appState.updateSleepTime(time);
-
-                          // Cierra el modal
                           Navigator.pop(context);
                         } else {
-                          // Cierra el teclado
                           FocusScope.of(context).unfocus();
-
-                          // Muestra un mensaje de error
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
