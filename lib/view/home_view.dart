@@ -20,8 +20,8 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize:
-            Size.fromHeight(MediaQuery.of(context).size.height * 0.15),
+        preferredSize: Size.fromHeight(
+            (MediaQuery.of(context).size.height * 0.10) + kToolbarHeight),
         child: AppBar(
           title: Text(
             widget.title,
@@ -35,26 +35,27 @@ class _HomeViewState extends State<HomeView> {
           flexibleSpace: SafeArea(
             child: Column(
               children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  height: kToolbarHeight,
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(width: 48),
-                        // Placeholder for spacing
-                      ]),
-                ),
-                // Additional Content
+                SizedBox(height: kToolbarHeight),
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "¿Cuál horario elegirás?",
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontWeight: FontWeight.w300),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "¿Cuál horario elegirás?",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      fontWeight: FontWeight.w300),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

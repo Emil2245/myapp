@@ -24,11 +24,12 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
   Widget build(BuildContext context) {
     final appState = Provider.of<SharedState>(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    int? _sleepTime = appState.sleepTime;
+    int? sleepTime = appState.sleepTime;
 
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(screenHeight * 0.27),
+          preferredSize:
+              Size.fromHeight((screenHeight * 0.27) + kToolbarHeight),
           child: AppBar(
               actions: [SettingsButton(title: widget.title)],
               leading: IconButton(
@@ -53,7 +54,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
               flexibleSpace: SafeArea(
                 child: Column(
                   children: [
-                    // Additional Content
+                    SizedBox(height: kToolbarHeight),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
@@ -155,7 +156,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                 ? [
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 6, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
                         num: 6),
                   ]
                     .map(
@@ -175,11 +176,11 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 6, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
                         num: 6),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 5, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 5, sleepTime),
                         num: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -189,7 +190,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 4, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 4, sleepTime),
                         num: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -199,15 +200,15 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 3, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 3, sleepTime),
                         num: 3),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 2, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 2, sleepTime),
                         num: 2),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 1, _sleepTime),
+                        time: addTimes(widget.time as TimeOfDay, 1, sleepTime),
                         num: 1),
                   ]
                     .map(
