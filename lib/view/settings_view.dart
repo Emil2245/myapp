@@ -44,14 +44,8 @@ class _SettingsViewState extends State<SettingsView> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            onPressed: () async {
-              await Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) =>
-                      LoadingScreen(nextScreen: HomeView(title: widget.title)),
-                ),
-              );
+            onPressed: () {
+              Navigator.pop(context);
             },
             icon: const Icon(AppIcons.back),
           ),
