@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:myapp/app_icons.dart';
-import 'package:myapp/view/widgets/confirmation_bottom_sheet.dart';
 import 'package:myapp/view/widgets/set_alarm_button.dart';
 
 class AlarmButton extends StatelessWidget {
@@ -35,34 +32,29 @@ class AlarmButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           // Primer elemento: Número de ciclos
-            Expanded(
-              child: Text(
-                "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      fontWeight: FontWeight.w300,
-                    ),
-              ),
+          Expanded(
+            child: Text(
+              "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    fontWeight: FontWeight.w300,
+                  ),
             ),
-
-            // Segundo elemento: Texto centrado (Hora)
-            Expanded(
-              child: Text(
-                time?.format(context) ?? "No time set",
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
+          ),
+          Expanded(
+            child: Text(
+              time?.format(context) ?? "No time set",
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
-
-            // Tercer elemento: Botón de alarma ajustado
-            Expanded(
-              child: SetAlarmButton(onPressed: onPressed, time: time),
-            ),
-          
+          ),
+          Expanded(
+            child: SetAlarmButton(onPressed: onPressed, time: time),
+          ),
         ],
       ),
     );

@@ -5,13 +5,8 @@ import 'package:provider/provider.dart';
 import '../../controller/shared_state.dart';
 
 class TimeInput extends StatefulWidget {
-  final ValueNotifier<int?> valueNotifier;
-  final int initialValue;
-
   const TimeInput({
     super.key,
-    required this.valueNotifier,
-    required this.initialValue,
   });
 
   @override
@@ -20,23 +15,34 @@ class TimeInput extends StatefulWidget {
 
 class _TimeInputState extends State<TimeInput> {
   late TextEditingController _controller;
+  late ValueNotifier<int?> valueNotifier;
 
+  //todo: selecting the check button on keyboard does not change the value
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(text: widget.initialValue.toString());
-    widget.valueNotifier.value = widget.initialValue;
+    _controller = TextEditingController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final appState = Provider.of<SharedState>(context, listen: false);
+    _controller.text = appState.sleepTime.toString();
+    valueNotifier = ValueNotifier<int?>(appState.sleepTime);
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    valueNotifier.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<SharedState>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -68,10 +74,9 @@ class _TimeInputState extends State<TimeInput> {
           ),
           onChanged: (value) {
             final int? number = int.tryParse(value);
-            widget.valueNotifier.value =
-                (number != null && number >= 1 && number <= 120)
-                    ? number
-                    : null;
+            if (number != null && number >= 1 && number <= 120) {
+              valueNotifier.value = number;
+            }
           },
           style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
@@ -92,41 +97,32 @@ class _TimeInputState extends State<TimeInput> {
                             Theme.of(context).colorScheme.onPrimaryFixedVariant,
                       ),
                       onPressed: () {
-                        final time = widget.valueNotifier.value;
+                        // Intenta convertir el texto del controlador en un entero
+                        final int? time = int.tryParse(_controller.text);
+
                         if (time != null && time >= 1 && time <= 120) {
+                          // Actualiza el estado global con el tiempo ingresado
+                          final appState =
+                              Provider.of<SharedState>(context, listen: false);
                           appState.updateSleepTime(time);
-                          Navigator.pop(context,
-                              time); // Cierra el modal y devuelve el valor válido.
-                        } else {
-                          // Cierra el teclado.
-                          FocusScope.of(context).unfocus();
-                          // Cierra el modal.
+
+                          // Cierra el modal
                           Navigator.pop(context);
-                          // Muestra el mensaje de error con bordes redondeados.
+                        } else {
+                          // Cierra el teclado
+                          FocusScope.of(context).unfocus();
+
+                          // Muestra un mensaje de error
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
-                                'Por favor, ingresa un número válido',
-                                textAlign: TextAlign.center,
-                                maxLines: null,
-                                softWrap: true,
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color:
-                                      Theme.of(context).colorScheme.onPrimary,
-                                ),
+                                'Por favor, ingresa un número válido entre 1 y 120.',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white),
                               ),
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .onErrorContainer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    20), // Bordes redondeados.
-                              ),
-                              behavior: SnackBarBehavior.floating,
-                              // Hace que el SnackBar sea flotante.
-                              margin: EdgeInsets.all(
-                                  16), // Margen para separar el SnackBar de los bordes.
+                              backgroundColor: Colors.red,
                             ),
                           );
                         }

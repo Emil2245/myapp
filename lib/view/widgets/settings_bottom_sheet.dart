@@ -11,8 +11,6 @@ class SettingsBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appState = Provider.of<SharedState>(context);
-    final ValueNotifier<int?> valueNotifier = ValueNotifier<int?>(initialValue);
-
     return Padding(
       padding: EdgeInsets.only(
           bottom: 15+MediaQuery.of(context).viewInsets.bottom,
@@ -46,10 +44,7 @@ class SettingsBottomSheet extends StatelessWidget {
                   maxLines: null,
                 ),
               ),
-              TimeInput(
-                valueNotifier: valueNotifier,
-                initialValue: initialValue,
-              ),
+              TimeInput(),
             ],
           )
         ],

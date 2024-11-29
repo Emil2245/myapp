@@ -13,10 +13,10 @@ class SettingsButton extends StatefulWidget {
 }
 
 class _SettingsButtonState extends State<SettingsButton> {
-  int? _sleepTime;
 
   @override
   Widget build(BuildContext context) {
+    //todo: do we need a loading screen?
     return IconButton(
       onPressed: () async {
         await Navigator.pushReplacement(

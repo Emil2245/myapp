@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/view/components/kind_sleep_text.dart';
-import 'package:myapp/view/settings_view.dart';
 import 'package:myapp/view/widgets/alarm_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 import '../app_icons.dart';
+import '../controller/shared_state.dart';
+import 'components/settings_button.dart';
 
 class TimeSelectionView extends StatefulWidget {
   const TimeSelectionView(
-      {super.key,
-      required this.title,
-      required this.time,
-      required this.mode,
-      required this.preTime});
+      {super.key, required this.title, required this.time, required this.mode});
 
   final String title;
   final int mode;
   final TimeOfDay? time;
-  final int preTime;
 
   @override
   State<TimeSelectionView> createState() => _TimeSelectionViewState();
@@ -25,41 +21,16 @@ class TimeSelectionView extends StatefulWidget {
 
 class _TimeSelectionViewState extends State<TimeSelectionView> {
   @override
-  void initState() {
-    super.initState();
-    _loadSleepTime();
-  }
-
-  late int _sleepTime;
-  @override
   Widget build(BuildContext context) {
+    final appState = Provider.of<SharedState>(context);
     final screenHeight = MediaQuery.of(context).size.height;
+    int? _sleepTime = appState.sleepTime;
 
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(screenHeight * 0.27),
           child: AppBar(
-              actions: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => SettingsView(
-                          title: widget.title,
-                        ),
-                      ),
-                    ).then((_) {
-                      _loadSleepTime();
-                    });
-                  },
-                  icon: Icon(
-                    Icons.settings,
-                    size: 25,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  ),
-                ),
-              ],
+              actions: [SettingsButton(title: widget.title)],
               leading: IconButton(
                 onPressed: () {
                   Navigator.pop(context);
@@ -125,7 +96,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                     ],
                                   ),
                                   child: IconButton(
-                                      onPressed: () {},
+                                      onPressed: onPressed,
                                       icon: Icon(
                                         Icons.autorenew,
                                         color: Theme.of(context)
@@ -135,7 +106,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                       )),
                                 ),
                                 TextButton(
-                                  onPressed: () {},
+                                  onPressed: onPressed,
                                   child: Text(
                                     widget.time?.format(context) ?? "--:--",
                                     style: Theme.of(context)
@@ -184,8 +155,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                 ? [
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 6, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 6, _sleepTime),
                         num: 6),
                   ]
                     .map(
@@ -205,13 +175,11 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 6, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 6, _sleepTime),
                         num: 6),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 5, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 5, _sleepTime),
                         num: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -221,8 +189,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 4, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 4, _sleepTime),
                         num: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -232,18 +199,15 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     ),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 3, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 3, _sleepTime),
                         num: 3),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 2, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 2, _sleepTime),
                         num: 2),
                     AlarmButton(
                         onPressed: () {},
-                        time: addTimes(
-                            widget.time as TimeOfDay, 1, widget.preTime),
+                        time: addTimes(widget.time as TimeOfDay, 1, _sleepTime),
                         num: 1),
                   ]
                     .map(
@@ -256,13 +220,6 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     .toList(),
           ),
         )));
-  }
-
-  Future<void> _loadSleepTime() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _sleepTime = prefs.getInt('timeToSleep') ?? 30;
-    });
   }
 
   TimeOfDay addTimes(TimeOfDay time, int num, int pretime) {
@@ -282,5 +239,25 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
         nuevaHora.add(timeAdded).add(preTimeToAdd);
 
     return TimeOfDay(hour: resultado.hour, minute: resultado.minute);
+  }
+
+  void onPressed() async {
+    final pickedTime = (3 == widget.mode || 4 == widget.mode)
+        ? TimeOfDay.now()
+        : await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
+    Navigator.pop(context);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => TimeSelectionView(
+          title: widget.title,
+          time: pickedTime,
+          mode: widget.mode,
+        ),
+      ),
+    );
   }
 }

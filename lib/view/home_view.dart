@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/app_icons.dart';
-import 'package:myapp/view/settings_view.dart';
+import 'package:myapp/view/components/settings_button.dart';
 import 'package:myapp/view/time_selection_view.dart';
 import 'package:myapp/view/widgets/custom_button.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'loading_screen.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.title});
@@ -17,14 +14,7 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  int? _sleepTime;
   TimeOfDay? selectedTime;
-
-  @override
-  void initState() {
-    _loadSleepTime();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +52,9 @@ class _HomeViewState extends State<HomeView> {
                     children: [
                       Text(
                         "¿Cuál horario elegirás?",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge
-                            ?.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.onPrimary,
-                                fontWeight: FontWeight.w300),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            fontWeight: FontWeight.w300),
                       ),
                     ],
                   ),
@@ -76,86 +62,61 @@ class _HomeViewState extends State<HomeView> {
               ],
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () async {
-                await Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => LoadingScreen(nextScreen: SettingsView(
-                      title: widget.title,
-                    ))
-                  ),
-                ).then((_) {
-                  _loadSleepTime(); // Vuelve a cargar la variable al regresar
-                });
-              },
-              icon: Icon(
-                Icons.settings,
-                size: 25,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ),
-            ),
-          ],
+          actions: [SettingsButton(title: widget.title)],
         ),
       ),
-      body: _sleepTime == null
-          ? Center(
-              child: Container(
-                  color: Theme.of(context).colorScheme.primary,
-                  child: CircularProgressIndicator()))
-          : Container(
-              color: Theme.of(context).colorScheme.primary,
-              child: SingleChildScrollView(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ...[
-                        CustomButton(
-                          onPressed: () {
-                            onPressed(mode: 1);
-                          },
-                          iconPath: AppIcons.moon,
-                          topText: 'Calcula el mejor momento para dormir',
-                          bottomText: 'Hora de Dormir',
-                        ),
-                        CustomButton(
-                          onPressed: () {
-                            onPressed(mode: 2);
-                          },
-                          iconPath: AppIcons.sun,
-                          topText: 'Calcula el mejor momento para despertar',
-                          bottomText: 'Hora de Despertar',
-                        ),
-                        CustomButton(
-                          onPressed: () {
-                            onPressed(mode: 3);
-                          },
-                          iconPath: AppIcons.clock,
-                          topText: 'Calcula el mejor momento para despertar',
-                          bottomText: 'Duerme Ahora',
-                        ),
-                        CustomButton(
-                          onPressed: () {
-                            onPressed(mode: 4);
-                          },
-                          iconPath: AppIcons.nap,
-                          topText: 'Toma una siesta en este momento',
-                          bottomText: 'Siestita <3',
-                        ),
-                      ].map(
-                        (button) => Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 12.0),
-                          child: button,
-                        ),
-                      ),
-                    ],
+      body: Container(
+        color: Theme.of(context).colorScheme.primary,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ...[
+                  CustomButton(
+                    onPressed: () {
+                      onPressed(mode: 1);
+                    },
+                    iconPath: AppIcons.moon,
+                    topText: 'Calcula el mejor momento para dormir',
+                    bottomText: 'Hora de Dormir',
+                  ),
+                  CustomButton(
+                    onPressed: () {
+                      onPressed(mode: 2);
+                    },
+                    iconPath: AppIcons.sun,
+                    topText: 'Calcula el mejor momento para despertar',
+                    bottomText: 'Hora de Despertar',
+                  ),
+                  CustomButton(
+                    onPressed: () {
+                      onPressed(mode: 3);
+                    },
+                    iconPath: AppIcons.clock,
+                    topText: 'Calcula el mejor momento para despertar',
+                    bottomText: 'Duerme Ahora',
+                  ),
+                  CustomButton(
+                    onPressed: () {
+                      onPressed(mode: 4);
+                    },
+                    iconPath: AppIcons.nap,
+                    topText: 'Toma una siesta en este momento',
+                    bottomText: 'Siestita <3',
+                  ),
+                ].map(
+                  (button) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    child: button,
                   ),
                 ),
-              ),
+              ],
             ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -178,18 +139,10 @@ class _HomeViewState extends State<HomeView> {
           builder: (_) => TimeSelectionView(
             title: widget.title,
             time: pickedTime,
-            preTime: _sleepTime ?? 30,
             mode: mode,
           ),
         ),
       );
     }
-  }
-
-  Future<void> _loadSleepTime() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _sleepTime = prefs.getInt('timeToSleep') ?? 30;
-    });
   }
 }
