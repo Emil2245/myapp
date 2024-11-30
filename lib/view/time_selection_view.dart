@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:sleeepy_time/view/components/kind_sleep_text.dart';
-import 'package:sleeepy_time/view/widgets/alarm_button.dart';
 import 'package:provider/provider.dart';
-
 import 'package:sleeepy_time/app_icons.dart';
 import 'package:sleeepy_time/controller/shared_state.dart';
+import 'package:sleeepy_time/view/components/kind_sleep_text.dart';
+import 'package:sleeepy_time/view/components/reminder_bottom_text.dart';
+import 'package:sleeepy_time/view/widgets/alarm_button.dart';
+
 import 'components/settings_button.dart';
 
 class TimeSelectionView extends StatefulWidget {
@@ -158,6 +159,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                         onPressed: () {},
                         time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
                         num: 6),
+                    ReminderBottomText()
                   ]
                     .map(
                       (button) => Padding(
@@ -210,6 +212,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                         onPressed: () {},
                         time: addTimes(widget.time as TimeOfDay, 1, sleepTime),
                         num: 1),
+                    ReminderBottomText()
                   ]
                     .map(
                       (button) => Padding(
