@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/components/time_input.dart';
+import 'package:sleeepy_time/view/components/time_input.dart';
 
 class SettingsBottomSheet extends StatelessWidget {
   final int initialValue;

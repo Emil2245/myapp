@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/widgets/set_alarm_button.dart';
+import 'package:sleeepy_time/view/widgets/set_alarm_button.dart';
 
 class AlarmButton extends StatelessWidget {
   final VoidCallback onPressed;

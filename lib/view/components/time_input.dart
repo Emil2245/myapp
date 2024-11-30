@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:myapp/controller/shared_state.dart';
+import 'package:sleeepy_time/controller/shared_state.dart';
 import 'package:provider/provider.dart';
 
 class TimeInput extends StatefulWidget {

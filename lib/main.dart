@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/theme.dart';
+import 'package:sleeepy_time/theme.dart';
 import 'package:provider/provider.dart';
 import 'controller/shared_state.dart';
 import 'view/home_view.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      darkTheme: materialTheme.dark(),
+      darkTheme: materialTheme.light(),
       themeMode: ThemeMode.system,
       home: const HomeView(title: 'Sleeepy Time'),
     );

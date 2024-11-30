@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/app_icons.dart';
-import 'package:myapp/view/components/settings_button.dart';
-import 'package:myapp/view/time_selection_view.dart';
-import 'package:myapp/view/widgets/custom_button.dart';
+import 'package:sleeepy_time/app_icons.dart';
+import 'package:sleeepy_time/view/components/settings_button.dart';
+import 'package:sleeepy_time/view/time_selection_view.dart';
+import 'package:sleeepy_time/view/widgets/custom_button.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.title});

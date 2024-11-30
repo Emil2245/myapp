@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/widgets/settings_bottom_sheet.dart';
+import 'package:sleeepy_time/view/widgets/settings_bottom_sheet.dart';
 
 class SetSleepTimeButton extends StatelessWidget {
   final ValueChanged<int> onValueChanged;

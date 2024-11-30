@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/view/settings_view.dart';
+import 'package:sleeepy_time/view/settings_view.dart';
 
 
 class SettingsButton extends StatefulWidget {
@@ -14,7 +14,6 @@ class SettingsButton extends StatefulWidget {
 class _SettingsButtonState extends State<SettingsButton> {
   @override
   Widget build(BuildContext context) {
-    //todo: do we need a loading screen?
     return IconButton(
       onPressed: () async {
         await Navigator.push(

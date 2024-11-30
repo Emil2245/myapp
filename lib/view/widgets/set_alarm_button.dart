@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:myapp/app_icons.dart';
-import 'package:myapp/view/widgets/confirmation_bottom_sheet.dart';
+import 'package:sleeepy_time/app_icons.dart';
+import 'package:sleeepy_time/view/widgets/confirmation_bottom_sheet.dart';
 
 class SetAlarmButton extends StatelessWidget {
   final VoidCallback onPressed;
