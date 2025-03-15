@@ -58,7 +58,8 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     SizedBox(height: kToolbarHeight),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 40) ,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 40),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -86,11 +87,16 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                   width: 40,
                                   height: 40,
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimaryFixedVariant,
                                     shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Theme.of(context).colorScheme.tertiaryContainer.withOpacity(0.2),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .tertiaryContainer
+                                            .withOpacity(0.2),
                                       ),
                                     ],
                                   ),
@@ -98,10 +104,14 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                     onPressed: onPressed,
                                     icon: Icon(
                                       Icons.autorenew,
-                                      color: Theme.of(context).colorScheme.primaryContainer,
-                                      size: 24, // Ajusta el tamaño del ícono si es necesario
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      size:
+                                          24, // Ajusta el tamaño del ícono si es necesario
                                     ),
-                                    padding: EdgeInsets.zero, // Reduce el padding interno del IconButton
+                                    padding: EdgeInsets
+                                        .zero, // Reduce el padding interno del IconButton
                                   ),
                                 ),
                                 TextButton(
@@ -156,7 +166,9 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                         onPressed: () {},
                         time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
                         num: 6),
-                    ReminderBottomText()
+                    Row(
+                      children: <Widget>[ReminderBottomText()],
+                    ),
                   ]
                     .map(
                       (button) => Padding(
@@ -170,7 +182,8 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleepText(textHeadline: "Para un descanso eficiente"),
+                        KindSleepText(
+                            textHeadline: "Para un descanso eficiente"),
                       ],
                     ),
                     AlarmButton(
@@ -194,7 +207,8 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleepText(textHeadline: "Para un descanso deficiente"),
+                        KindSleepText(
+                            textHeadline: "Para un descanso deficiente"),
                       ],
                     ),
                     AlarmButton(
