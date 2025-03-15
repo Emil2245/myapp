@@ -15,24 +15,24 @@ class SetAlarmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(context)
-                  .colorScheme
-                  .tertiaryContainer
-                  .withOpacity(0.2),
-              blurRadius: 10,
-              spreadRadius: 2,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Theme.of(context)
+                .colorScheme
+                .tertiaryContainer
+                .withOpacity(0.2),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
         child: IconButton(
           onPressed: () {
             showModalBottomSheet(

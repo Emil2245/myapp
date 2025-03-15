@@ -30,7 +30,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
     return Scaffold(
         appBar: PreferredSize(
           preferredSize:
-              Size.fromHeight((screenHeight * 0.27) + kToolbarHeight),
+              Size.fromHeight((screenHeight * 0.20) + kToolbarHeight),
           child: AppBar(
               actions: [SettingsButton(title: widget.title)],
               leading: IconButton(
@@ -58,7 +58,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     SizedBox(height: kToolbarHeight),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 40) ,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -72,7 +72,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                   "Texto por defecto",
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleLarge
+                                  .titleMedium
                                   ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -83,29 +83,26 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Container(
+                                  width: 40,
+                                  height: 40,
                                   decoration: BoxDecoration(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onPrimaryFixedVariant,
-                                    borderRadius: BorderRadius.circular(40),
+                                    color: Theme.of(context).colorScheme.onPrimaryFixedVariant,
+                                    shape: BoxShape.circle,
                                     boxShadow: [
                                       BoxShadow(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .tertiaryContainer
-                                            .withOpacity(0.2),
+                                        color: Theme.of(context).colorScheme.tertiaryContainer.withOpacity(0.2),
                                       ),
                                     ],
                                   ),
                                   child: IconButton(
-                                      onPressed: onPressed,
-                                      icon: Icon(
-                                        Icons.autorenew,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primaryContainer,
-                                        size: 30,
-                                      )),
+                                    onPressed: onPressed,
+                                    icon: Icon(
+                                      Icons.autorenew,
+                                      color: Theme.of(context).colorScheme.primaryContainer,
+                                      size: 24, // Ajusta el tamaño del ícono si es necesario
+                                    ),
+                                    padding: EdgeInsets.zero, // Reduce el padding interno del IconButton
+                                  ),
                                 ),
                                 TextButton(
                                   onPressed: onPressed,
@@ -133,7 +130,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                   "Texto por defecto",
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleLarge
+                                  .titleMedium
                                   ?.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -173,7 +170,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleep(textHeadline: "Para un descanso eficiente"),
+                        KindSleepText(textHeadline: "Para un descanso eficiente"),
                       ],
                     ),
                     AlarmButton(
@@ -187,7 +184,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleep(textHeadline: "Para un descanso regular"),
+                        KindSleepText(textHeadline: "Para un descanso regular"),
                       ],
                     ),
                     AlarmButton(
@@ -197,7 +194,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        KindSleep(textHeadline: "Para un descanso deficiente"),
+                        KindSleepText(textHeadline: "Para un descanso deficiente"),
                       ],
                     ),
                     AlarmButton(

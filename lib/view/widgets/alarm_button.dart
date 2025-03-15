@@ -26,35 +26,30 @@ class AlarmButton extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
       width: MediaQuery.of(context).size.width,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           // Primer elemento: Número de ciclos
-          Expanded(
-            child: Text(
-              "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    fontWeight: FontWeight.w300,
-                  ),
-            ),
+          Text(
+            "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  fontWeight: FontWeight.w400,
+                ),
           ),
-          Expanded(
-            child: Text(
-              time?.format(context) ?? "No time set",
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
+          Text(
+            time?.format(context) ?? "No time set",
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
           ),
-          Expanded(
-            child: SetAlarmButton(onPressed: onPressed, time: time),
-          ),
+          SetAlarmButton(onPressed: onPressed, time: time),
         ],
       ),
     );

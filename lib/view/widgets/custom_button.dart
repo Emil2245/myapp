@@ -54,7 +54,7 @@ class CustomButton extends StatelessWidget {
             const SizedBox(height: 12.0),
             Text(
               topText,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+              style: Theme.of(context).textTheme.titleSmall?.copyWith(
                 color: Theme.of(context).colorScheme.primaryFixedDim,
                 fontWeight: FontWeight.normal,
               ),
@@ -62,7 +62,7 @@ class CustomButton extends StatelessWidget {
             const SizedBox(height: 14.0),
             Text(
               bottomText,
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.bold,
               ),
