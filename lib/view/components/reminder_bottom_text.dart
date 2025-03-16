@@ -15,15 +15,18 @@ class ReminderBottomText extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                "Ten en cuenta que esta app asume que tardas ${appState.sleepTime} minutos en quedarte dormida <3",
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.w300),
-                textAlign: TextAlign.center,
-                maxLines: null,
-                softWrap: true,
-              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: Text(
+                  "Ten en cuenta que esta app asume que tardas ${appState.sleepTime} minutos en quedarte dormida <3",
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.w300),
+                  textAlign: TextAlign.center,
+                  maxLines: null,
+                  softWrap: true,
+                ),
+              )
             ],
           ),
         )

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:sleeepy_time/app_icons.dart';
 import 'package:sleeepy_time/view/components/settings_button.dart';
-import 'package:sleeepy_time/view/time_selection_view.dart';
 import 'package:sleeepy_time/view/widgets/custom_button.dart';
 
-import 'package:sleeepy_time/controller/shared_state.dart';
+import '../controller/home_controller.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key, required this.title});
@@ -18,37 +15,30 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   TimeOfDay? selectedTime;
+  late HomeController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = HomeController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<SharedState>(context);
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(
-            (MediaQuery
-                .of(context)
-                .size
-                .height * 0.10) + kToolbarHeight),
+            (MediaQuery.of(context).size.height * 0.10) + kToolbarHeight),
         child: AppBar(
           title: Text(
             widget.title,
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleLarge
-                ?.copyWith(
-                color: Theme
-                    .of(context)
-                    .colorScheme
-                    .onPrimary,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
                 fontWeight: FontWeight.normal),
           ),
           centerTitle: true,
           automaticallyImplyLeading: false,
-          backgroundColor: Theme
-              .of(context)
-              .primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           flexibleSpace: SafeArea(
             child: Column(
               children: [
@@ -62,16 +52,14 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Text(
                               "¿Cuál horario elegirás?",
-                              style: Theme
-                                  .of(context)
+                              style: Theme.of(context)
                                   .textTheme
                                   .titleLarge
                                   ?.copyWith(
-                                  color: Theme
-                                      .of(context)
-                                      .colorScheme
-                                      .onPrimary,
-                                  fontWeight: FontWeight.w300),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
+                                      fontWeight: FontWeight.w300),
                             ),
                           ],
                         ),
@@ -86,90 +74,32 @@ class _HomeViewState extends State<HomeView> {
         ),
       ),
       body: Container(
-        color: Theme
-            .of(context)
-            .colorScheme
-            .primary,
+        color: Theme.of(context).colorScheme.primary,
         child: SingleChildScrollView(
           child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ...[
-                  CustomButton(
-                    onPressed: () {
-                      onPressed(mode: 1);
-                    },
-                    iconPath: AppIcons.moon,
-                    topText: 'Calcula el mejor momento para dormir',
-                    bottomText: 'Hora de Dormir',
-                  ),
-                  CustomButton(
-                    onPressed: () {
-                      onPressed(mode: 2);
-                    },
-                    iconPath: AppIcons.sun,
-                    topText: 'Calcula el mejor momento para despertar',
-                    bottomText: 'Hora de Despertar',
-                  ),
-                  CustomButton(
-                    onPressed: () {
-                      onPressed(mode: 3);
-                    },
-                    iconPath: AppIcons.clock,
-                    topText: 'Calcula el mejor momento para despertar',
-                    bottomText: 'Duerme Ahora',
-                  ),
-                  CustomButton(
-                    onPressed: () {
-                      onPressed(mode: 4);
-                    },
-                    iconPath: AppIcons.nap,
-                    topText: 'Toma una siesta en este momento',
-                    bottomText: 'Siestita <3',
-                  ),
-
-                ].map(
-                      (button) =>
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 16.0),
-                        child: button,
-                      ),
-                ),
-                SizedBox(height: 16,)
-              ],
-            ),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _controller.sleepAtTimeStrategy,
+                  _controller.wakeUpAtTimeStrategy,
+                  _controller.sleepNowStrategy,
+                  _controller.napStrategy
+                ]
+                    .map((sleepStrategy) => Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 16.0),
+                          child: CustomButton(
+                            onPressed: () =>
+                                sleepStrategy.onPressed(context, widget.title),
+                            iconPath: sleepStrategy.getIcon(),
+                            topText: sleepStrategy.getDescription(),
+                            bottomText: sleepStrategy.getActionText(),
+                          ),
+                        ))
+                    .toList()),
           ),
         ),
       ),
     );
-  }
-
-  Future<void> onPressed({required int mode}) async {
-    final pickedTime = (3 == mode || 4 == mode)
-        ? TimeOfDay.now()
-        : await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.now(),
-    );
-
-    if (pickedTime != null) {
-      setState(() {
-        selectedTime = pickedTime;
-      });
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) =>
-              TimeSelectionView(
-                title: widget.title,
-                time: pickedTime,
-                mode: mode,
-              ),
-        ),
-      );
-    }
   }
 }

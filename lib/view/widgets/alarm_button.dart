@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sleeepy_time/view/widgets/set_alarm_button.dart';
 
 class AlarmButton extends StatelessWidget {
-  final VoidCallback onPressed;
+
   final TimeOfDay? time;
   final int num;
 
   const AlarmButton(
       {super.key,
-      required this.onPressed,
       required this.time,
       required this.num});
 
@@ -33,7 +32,7 @@ class AlarmButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           // Primer elemento: Número de ciclos
-          Text(
+          Text(num==0?"Siesta:\n26min":
             "$num ciclo${num > 1 ? 's' : ''}:\n ${(num * 1.5).toInt()}h ${num % 2 == 0 ? '' : '30min'}",
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -49,7 +48,7 @@ class AlarmButton extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
           ),
-          SetAlarmButton(onPressed: onPressed, time: time),
+          SetAlarmButton(time: time),
         ],
       ),
     );

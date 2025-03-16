@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sleeepy_time/app_icons.dart';
 import 'package:sleeepy_time/controller/shared_state.dart';
+import 'package:sleeepy_time/repository/model/nap.dart';
+import 'package:sleeepy_time/repository/model/strategy/abs_sleep_strategy.dart';
 import 'package:sleeepy_time/view/components/kind_sleep_text.dart';
 import 'package:sleeepy_time/view/components/reminder_bottom_text.dart';
 import 'package:sleeepy_time/view/widgets/alarm_button.dart';
@@ -10,10 +12,14 @@ import 'components/settings_button.dart';
 
 class TimeSelectionView extends StatefulWidget {
   const TimeSelectionView(
-      {super.key, required this.title, required this.time, required this.mode});
+      {super.key,
+      required this.title,
+      required this.time,
+      required this.strategy});
 
   final String title;
-  final int mode;
+
+  final SleepStrategy strategy;
   final TimeOfDay? time;
 
   @override
@@ -23,9 +29,8 @@ class TimeSelectionView extends StatefulWidget {
 class _TimeSelectionViewState extends State<TimeSelectionView> {
   @override
   Widget build(BuildContext context) {
-    final appState = Provider.of<SharedState>(context);
     final screenHeight = MediaQuery.of(context).size.height;
-    int? sleepTime = appState.sleepTime;
+    int? sleepTime = Provider.of<SharedState>(context).sleepTime;
 
     return Scaffold(
         appBar: PreferredSize(
@@ -64,13 +69,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              {
-                                    1: "Despertando a las",
-                                    2: "Durmiendo a las",
-                                    3: "Durmiendo ahora",
-                                    4: "Tomando una siesta ahora"
-                                  }[widget.mode] ??
-                                  "Texto por defecto",
+                              widget.strategy.getTitle(),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -101,7 +100,10 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                     ],
                                   ),
                                   child: IconButton(
-                                    onPressed: onPressed,
+                                    onPressed: () async {
+                                      await widget.strategy.onPressedRetry(
+                                          context, widget.title);
+                                    },
                                     icon: Icon(
                                       Icons.autorenew,
                                       color: Theme.of(context)
@@ -115,7 +117,10 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: onPressed,
+                                  onPressed: () async {
+                                    await widget.strategy
+                                        .onPressedRetry(context, widget.title);
+                                  },
                                   child: Text(
                                     widget.time?.format(context) ?? "--:--",
                                     style: Theme.of(context)
@@ -131,13 +136,7 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                               ],
                             ),
                             Text(
-                              {
-                                    1: "deberías dormir en una de las siguientes horas:",
-                                    2: "deberías despertar en una de las siguientes horas:",
-                                    3: "deberías despertar en una de las siguientes horas:",
-                                    4: "deberías despertar a las:"
-                                  }[widget.mode] ??
-                                  "Texto por defecto",
+                              widget.strategy.getSubtitle(),
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium
@@ -160,14 +159,18 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
         body: SingleChildScrollView(
             child: Center(
           child: Column(
-            children: widget.mode == 4
+            children: widget.strategy is NapStrategy
                 ? [
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
-                        num: 6),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 0, sleepTime),
+                        num: 0),
                     Row(
-                      children: <Widget>[ReminderBottomText()],
+                      children: [
+                        Expanded(
+                          child: ReminderBottomText(),
+                        ),
+                      ],
                     ),
                   ]
                     .map(
@@ -187,12 +190,12 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                       ],
                     ),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 6, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 6, sleepTime),
                         num: 6),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 5, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 5, sleepTime),
                         num: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -201,8 +204,8 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                       ],
                     ),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 4, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 4, sleepTime),
                         num: 4),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -212,16 +215,16 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                       ],
                     ),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 3, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 3, sleepTime),
                         num: 3),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 2, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 2, sleepTime),
                         num: 2),
                     AlarmButton(
-                        onPressed: () {},
-                        time: addTimes(widget.time as TimeOfDay, 1, sleepTime),
+                        time: widget.strategy
+                            .addTimes(widget.time as TimeOfDay, 1, sleepTime),
                         num: 1),
                     ReminderBottomText()
                   ]
@@ -235,44 +238,5 @@ class _TimeSelectionViewState extends State<TimeSelectionView> {
                     .toList(),
           ),
         )));
-  }
-
-  TimeOfDay addTimes(TimeOfDay time, int num, int pretime) {
-    final horita = DateTime.now();
-    final nuevaHora = horita.copyWith(hour: time.hour, minute: time.minute);
-
-    Duration preTimeToAdd = Duration(minutes: pretime);
-    Duration timeAdded = widget.mode == 4
-        ? Duration(minutes: 26)
-        : Duration(
-            hours: (num * 1.5).floor().toInt(),
-            minutes: !(num % 2 == 0) ? 30 : 0);
-
-    final resultado = {
-          1: nuevaHora.subtract(timeAdded).subtract(preTimeToAdd)
-        }[widget.mode] ??
-        nuevaHora.add(timeAdded).add(preTimeToAdd);
-
-    return TimeOfDay(hour: resultado.hour, minute: resultado.minute);
-  }
-
-  void onPressed() async {
-    final pickedTime = (3 == widget.mode || 4 == widget.mode)
-        ? TimeOfDay.now()
-        : await showTimePicker(
-            context: context,
-            initialTime: TimeOfDay.now(),
-          );
-    Navigator.pop(context);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => TimeSelectionView(
-          title: widget.title,
-          time: pickedTime,
-          mode: widget.mode,
-        ),
-      ),
-    );
   }
 }

@@ -25,7 +25,7 @@ class _SettingsViewState extends State<SettingsView> {
   Future<void> _loadSleepTime() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      _sleepTime = prefs.getInt('timeToSleep') ?? 30; 
+      _sleepTime = prefs.getInt('timeToSleep') ?? 30;
     });
   }
 
@@ -46,6 +46,7 @@ class _SettingsViewState extends State<SettingsView> {
               Navigator.pop(context);
             },
             icon: const Icon(AppIcons.back),
+            color: Theme.of(context).colorScheme.onPrimary,
           ),
           backgroundColor: Theme.of(context).primaryColor,
           title: Text(

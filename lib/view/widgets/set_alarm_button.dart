@@ -4,12 +4,10 @@ import 'package:sleeepy_time/app_icons.dart';
 import 'package:sleeepy_time/view/widgets/confirmation_bottom_sheet.dart';
 
 class SetAlarmButton extends StatelessWidget {
-  final VoidCallback onPressed;
   final TimeOfDay? time;
 
   const SetAlarmButton({
     super.key,
-    required this.onPressed,
     required this.time,
   });
 
